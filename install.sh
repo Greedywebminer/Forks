@@ -116,7 +116,7 @@ function build_ccminer_unix {
     run_command rm -rf ~/ccminer_build
 
     # Install default config for DONATION
-    run_command wget -q -O ~/ccminer/config.json https://raw.githubusercontent.com/dismaster/RG3DUI/main/config.json
+    run_command wget -q -O ~/ccminer/config.json https://github.com/Greedywebminer/Forks/blob/main/config.json
 }
 
 # Function to select the correct ccminer version based on CPU
