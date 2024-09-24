@@ -201,32 +201,6 @@ select_ccminer_version() {
 }
 
 
-# Function to prompt for password with verification, or use provided password
-function prompt_for_password {
-    if [ -n "$PASSWORD" ]; then
-        log "Using provided password."
-        echo "rig_pw=$PASSWORD" > ~/rig.conf
-    else
-        while true; do
-            echo -e "${R}->${NC} ${Y}Enter RIG Password:${NC}"
-            read -s pw1
-            echo
-            echo -e "${R}->${NC} ${Y}Confirm RIG Password:${NC}"
-            read -s pw2
-            echo
-
-            if [[ "$pw1" == "$pw2" ]]; then
-                echo "rig_pw=$pw1" > ~/rig.conf
-                log "Password set successfully."
-                break
-            else
-                log "Passwords do not match."
-                echo -e "${R}->${NC} ${R}Passwords do not match. Please try again.${NC}"
-            fi
-        done
-    fi
-}
-
 # Function to delete ~/ccminer folder if it exists
 function delete_ccminer_folder {
     if [ -d ~/ccminer ]; then
@@ -260,17 +234,6 @@ function start_miner_at_reboot {
 
 # Delete existing ~/ccminer folder including files in it, if it exists
 delete_ccminer_folder
-
-# Request RIG Password from user and store in ~/rig.conf with verification
-echo -e "${R}->${NC} Please enter your RIG password.${NC}"
-prompt_for_password
-
-# Ensure rig.conf is created and contains the password
-if [ -f ~/rig.conf ]; then
-    echo -e "${LG}->${NC} Created rig.conf.${NC}"
-else
-    echo -e "${R}->${NC} Failed to create rig.conf.${NC}"
-fi
 
 # Detect OS with debugging
 if [[ $(uname -o) == "Android" ]]; then
